@@ -7,6 +7,6 @@ async function bootstrap() {
     origin: '*', // Permitir que el frontend se conecte sin problemas
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
-  await app.listen(process.env.PORT ?? 3001); // Puerto 3001 para no chocar con el 3000 del front
+  await app.listen(process.env.PORT || 3001, '0.0.0.0');
 }
 bootstrap();
