@@ -3,7 +3,7 @@ import { urlencoded, json } from 'express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bodyParser: false });
   app.enableCors({
     origin: '*', // Permitir que el frontend se conecte sin problemas
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
