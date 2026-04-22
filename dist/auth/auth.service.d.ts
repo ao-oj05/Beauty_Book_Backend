@@ -7,5 +7,12 @@ export declare class AuthService {
         access_token: string;
         user: any;
     }>;
-    register(userDto: any): Promise<any>;
+    register(userDto: any): Promise<{
+        id: number;
+        email: string;
+        nombre: string;
+        telefono: string | null;
+        tipo: string;
+        createdAt: Date;
+    }>;
 }

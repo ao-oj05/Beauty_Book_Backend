@@ -6,5 +6,12 @@ export declare class AuthController {
         access_token: string;
         user: any;
     }>;
-    register(body: any): Promise<any>;
+    register(body: any): Promise<{
+        id: number;
+        email: string;
+        nombre: string;
+        telefono: string | null;
+        tipo: string;
+        createdAt: Date;
+    }>;
 }

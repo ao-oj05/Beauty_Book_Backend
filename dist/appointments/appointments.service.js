@@ -5,34 +5,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentsService = void 0;
 const common_1 = require("@nestjs/common");
+const prisma_service_1 = require("../prisma/prisma.service");
 let AppointmentsService = class AppointmentsService {
-    appointments = [];
-    findAll() {
-        return this.appointments;
+    prisma;
+    constructor(prisma) {
+        this.prisma = prisma;
     }
-    create(appointmentDto) {
-        const newAppointment = {
-            id: `BB-${Date.now().toString().slice(-6)}`,
-            ...appointmentDto,
-            estado: 'Pendiente',
-        };
-        this.appointments.push(newAppointment);
-        return newAppointment;
+    async findAll() {
+        return this.prisma.cita.findMany({ orderBy: { createdAt: 'desc' } });
     }
-    updateStatus(id, status) {
-        const index = this.appointments.findIndex(a => a.id === id);
-        if (index === -1) {
+    async create(data) {
+        return this.prisma.cita.create({
+            data: {
+                fecha: data.fecha,
+                hora: data.hora,
+                estado: 'Pendiente',
+                servicioNombre: data.servicio,
+                categoria: data.categoria,
+                especialista: data.especialista,
+                precio: data.precio ? parseFloat(data.precio) : null,
+                duracion: data.duracion,
+            },
+        });
+    }
+    async updateStatus(id, status) {
+        const cita = await this.prisma.cita.findUnique({ where: { id } });
+        if (!cita) {
             throw new common_1.NotFoundException('Cita no encontrada');
         }
-        this.appointments[index].estado = status;
-        return this.appointments[index];
+        return this.prisma.cita.update({
+            where: { id },
+            data: { estado: status },
+        });
     }
 };
 exports.AppointmentsService = AppointmentsService;
 exports.AppointmentsService = AppointmentsService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
 ], AppointmentsService);
 //# sourceMappingURL=appointments.service.js.map

@@ -1,29 +1,37 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AppointmentsService {
-  private appointments: any[] = [];
+  constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return this.appointments;
+  async findAll() {
+    return this.prisma.cita.findMany({ orderBy: { createdAt: 'desc' } });
   }
 
-  create(appointmentDto: any) {
-    const newAppointment = {
-      id: `BB-${Date.now().toString().slice(-6)}`,
-      ...appointmentDto,
-      estado: 'Pendiente', // Default status
-    };
-    this.appointments.push(newAppointment);
-    return newAppointment;
+  async create(data: any) {
+    return this.prisma.cita.create({
+      data: {
+        fecha: data.fecha,
+        hora: data.hora,
+        estado: 'Pendiente',
+        servicioNombre: data.servicio,
+        categoria: data.categoria,
+        especialista: data.especialista,
+        precio: data.precio ? parseFloat(data.precio) : null,
+        duracion: data.duracion,
+      },
+    });
   }
 
-  updateStatus(id: string, status: string) {
-    const index = this.appointments.findIndex(a => a.id === id);
-    if (index === -1) {
+  async updateStatus(id: string, status: string) {
+    const cita = await this.prisma.cita.findUnique({ where: { id } });
+    if (!cita) {
       throw new NotFoundException('Cita no encontrada');
     }
-    this.appointments[index].estado = status;
-    return this.appointments[index];
+    return this.prisma.cita.update({
+      where: { id },
+      data: { estado: status },
+    });
   }
 }

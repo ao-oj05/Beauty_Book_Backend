@@ -1,27 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ServicesService {
-  private readonly services = [
-    {
-      id: 1,
-      nombre: "Uñas de Gel",
-      categoria: "Uñas",
-      descripcion: "Aplicación de gel con diseño personalizado.",
-      duracion: "90 minutos",
-      especialista: "María García",
-      precio: 350,
-      imagen: "https://images.unsplash.com/photo-1519014816548-bf5fe059e98b?q=80&w=400&auto=format&fit=crop",
-    }
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  findAll() {
-    return this.services;
+  async findAll() {
+    return this.prisma.servicio.findMany({ orderBy: { createdAt: 'desc' } });
   }
 
-  create(serviceDto: any) {
-    const newService = { id: Date.now(), ...serviceDto };
-    this.services.push(newService);
-    return newService;
+  async create(data: any) {
+    return this.prisma.servicio.create({
+      data: {
+        nombre: data.nombre,
+        categoria: data.categoria,
+        descripcion: data.descripcion || null,
+        duracion: data.duracion,
+        especialista: data.especialista,
+        precio: parseFloat(data.precio),
+        imagen: data.imagen || null,
+      },
+    });
   }
 }

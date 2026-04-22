@@ -2,15 +2,26 @@ import { ServicesService } from './services.service';
 export declare class ServicesController {
     private readonly servicesService;
     constructor(servicesService: ServicesService);
-    findAll(): {
+    findAll(): Promise<{
         id: number;
         nombre: string;
+        createdAt: Date;
         categoria: string;
-        descripcion: string;
+        descripcion: string | null;
         duracion: string;
         especialista: string;
         precio: number;
-        imagen: string;
-    }[];
-    create(body: any): any;
+        imagen: string | null;
+    }[]>;
+    create(body: any): Promise<{
+        id: number;
+        nombre: string;
+        createdAt: Date;
+        categoria: string;
+        descripcion: string | null;
+        duracion: string;
+        especialista: string;
+        precio: number;
+        imagen: string | null;
+    }>;
 }

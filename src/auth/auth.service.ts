@@ -19,9 +19,8 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Credenciales inválidas');
     }
-    // Simulamos un JWT con un token básico
     return {
-      access_token: 'fake-jwt-token-' + user.id,
+      access_token: 'jwt-token-' + user.id,
       user: user,
     };
   }
@@ -31,7 +30,13 @@ export class AuthService {
     if (existingUser) {
       throw new UnauthorizedException('El usuario ya existe');
     }
-    const newUser = await this.usersService.create(userDto);
+    const newUser = await this.usersService.create({
+      nombre: userDto.nombre,
+      email: userDto.email,
+      password: userDto.password,
+      telefono: userDto.telefono || null,
+      tipo: userDto.tipo || 'cliente',
+    });
     const { password, ...result } = newUser;
     return result;
   }
