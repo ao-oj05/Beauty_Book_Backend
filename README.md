@@ -1,63 +1,98 @@
-# Beauty Book - API RESTful (Backend)
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-Este repositorio contiene el backend del sistema de gestión de citas **Beauty Book**. Desarrollado bajo una arquitectura orientada a servicios (SOA), esta API REST expone los endpoints necesarios para la administración de salones de belleza, especialistas y reservas.
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## Arquitectura y Tecnologías
-- **Framework:** NestJS
-- **ORM:** Prisma
-- **Base de Datos:** PostgreSQL
-- **Lenguaje:** TypeScript
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-Este proyecto está completamente desacoplado del frontend. Al operar de forma independiente, garantiza escalabilidad y un mantenimiento más limpio.
+## Description
 
-## Lógica de Negocio Destacada
-El sistema va más allá de operaciones CRUD básicas e implementa lógica de negocio real:
-- **Gestión Inteligente de Citas:** El sistema calcula y bloquea automáticamente los espacios de tiempo basándose en la duración específica de cada servicio. Esto previene de forma estricta los conflictos de agenda (overlapping) entre distintas reservas.
-- **Validación de Datos:** Todas las peticiones entrantes pasan por validaciones rigurosas utilizando DTOs y `class-validator`, asegurando la integridad de los datos en la base de datos.
-- **Manejo de Errores:** Implementación de interceptores y filtros de excepciones globales para devolver respuestas HTTP consistentes y claras al cliente.
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Seguridad y Calidad
-- **Autenticación:** Las rutas privadas (como el panel de control y reservas) están protegidas mediante JSON Web Tokens (JWT) y Guards nativos de NestJS.
-- **Protección de Datos:** Las contraseñas se almacenan de forma segura utilizando algoritmos de encriptación (Bcrypt).
-- **Código Limpio:** El proyecto mantiene una estructura modular y tipado estricto con TypeScript para evitar errores en tiempo de ejecución.
+## Project setup
 
-## Integraciones y API Externa
-El sistema está diseñado para integrarse fácilmente con servicios de terceros. 
-*(Nota: Aquí se implementará la conexión con servicios como envío de correos o almacenamiento de imágenes en la nube para enriquecer la plataforma).*
-
-## Despliegue
-La base de datos y la API están configuradas para su despliegue en la nube, garantizando disponibilidad 24/7.
-- **Base de Datos:** PostgreSQL
-- **API URL:** `[ENLACE_DE_PRODUCCION]`
-
----
-
-## Entorno de Desarrollo (Local)
-
-Para levantar este proyecto en tu máquina local, asegúrate de tener instalado Node.js y PostgreSQL.
-
-### 1. Instalación de dependencias
 ```bash
-npm install
+$ npm install
 ```
 
-### 2. Variables de entorno
-Crea un archivo `.env` en la raíz del proyecto tomando como referencia el `.env.example`. Asegúrate de configurar tu conexión a la base de datos:
-```env
-DATABASE_URL="postgresql://USUARIO:PASSWORD@localhost:5432/NOMBRE_BD?schema=public"
-JWT_SECRET="tu_secreto_super_seguro"
-```
+## Compile and run the project
 
-### 3. Base de Datos (Prisma)
-Genera el cliente y sincroniza los modelos con tu base de datos:
 ```bash
-npx prisma generate
-npx prisma db push
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
 ```
 
-### 4. Ejecución del Servidor
+## Run tests
+
 ```bash
-# Modo desarrollo
-npm run start:dev
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
 ```
-La API estará disponible por defecto en `http://localhost:3000`.
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
